@@ -3,9 +3,11 @@
 //
 
 #include "Student.h"
+#include "Book.h"
 #include <fstream>
 #include <iostream>
 #include <vector>
+
 
 Student::Student(string Name, string Surname, string Index) {
     name = move(Name);
@@ -20,7 +22,8 @@ Student::Student(string Name, string Surname, string Index) {
                  << name << ","
                  << rentBookNumber << ","
                  << toPay << ","
-                 << reservedBookNumber << ",\n";
+                 << reservedBookNumber << ","
+                 << timeBorrow << ",\n";
             file.close();
         }
         else{
@@ -49,7 +52,7 @@ Student::Student(string Index) {
             name = row[2];
             rentBookNumber = stoi(row[3]);
             toPay = stoi(row[4]);
-            reservedBookNumber = stoi(row[5]);
+            reservedBookNumber = row[5];
             break;
         }
     }
@@ -74,4 +77,18 @@ void Student::display(){
              << reservedBookNumber << "\n"
              << toPay << "\n";
     }
+}
+
+void Student::borrow() {
+    string title;
+    cout << "Please, insert title of the book you want to borrow:\n";
+    cin >> title;
+    Book borrowed(title);
+    if (borrowed.isAvailable()) {
+        borrowed.setTime();
+        borrowed.setAvailable(false);
+        rentBookNumber = borrowed.getISBN();
+        borrowed.changesUpload();
+    }
+    else{cout << "Not available at the moment!\n";}
 }
