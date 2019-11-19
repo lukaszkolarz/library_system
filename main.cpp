@@ -18,20 +18,28 @@ std::string sprawdz_godzine()
 }
 
 
+
+
 int main() {
 
     //Book ksiazka("Pan Samochodzik i Templariusze", "200", 250);
-    Book ksiega("Wladca Pierscieni");
-    ksiega.setTime();
+    //Book ksiega("Wladca Pierscieni");
+    //ksiega.setTime();
    // ksiega.setAvailable(true);
    // ksiega.setReservation(false);
-    ksiega.changesUpload();
+    //ksiega.changesUpload();
+
 
 
 
     //Student pierwszy("2137");
     //pierwszy.display();
 
+   //cout << g(1,11,96) - g(28,10,96);
+    Student osoba("234");
+    //osoba.borrow();
+    osoba.giveBack();
+    //cout <<  subDate("1.8.2019.");
 
 
     return 0;

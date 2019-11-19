@@ -3,35 +3,38 @@
 //
 
 #include <string>
-#include <ctime>
 
 using namespace std;
 
 #ifndef LIBRARY_SYSTEM_BOOK_H
 #define LIBRARY_SYSTEM_BOOK_H
 
+int days(int d, int m, int y);
+int subDate(string date);
+
 class Book {
 private:
     string title, ISBN;
     int pages;
-    bool availability = true, reserved = false;
-    string timeBorrowed = "0";
+    bool availability, reserved;
+    string timeBorrowed;
 
 public:
     Book(string title, string ISBN, int pages);                 //constructor to add new record (for root)
-    Book(string title);                                         //constructor to find a record
+    Book(string title, string number = "0");                    //constructor to find a record
 
     //set
     void setAvailable(bool available);
     void setReservation(bool reservation);
     void setTime();
+    void clearTime();
     //get
     string getISBN();
     bool isAvailable();
     bool isReserved();
     void changesUpload();
     string getTimeBorrowed();
-
+    string getTitle();
 };
 
 

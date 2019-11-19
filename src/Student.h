@@ -14,10 +14,9 @@ using namespace std;
 class Student {
 private:
     string name , surname, index;
-    int toPay = 0;
-    string rentBookNumber = "0";
-    string reservedBookNumber = "0" ;
-    string timeBorrow = "0";
+    float toPay = 0;
+    string rentBookNumber;
+    string reservedBookNumber;
 
 
 
@@ -25,8 +24,12 @@ public:
     Student(string Name, string Surname, string Index);
     Student(string Index);
 
+    void payPLN();
+    void schangesUpload();
+
     void borrow();
     void reserve();
+    void giveBack();
 
     void display();
 };

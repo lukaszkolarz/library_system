@@ -9,6 +9,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdio>
+#include <string>
 
 using namespace std;
 
@@ -16,6 +17,10 @@ Book::Book(string tit, string number, int pag) {
     title = move(tit);
     ISBN = move(number);
     pages = pag;
+    availability = true;
+    reserved = false;
+    timeBorrowed = "0";
+
 
     fstream file;
     file.open("Books.csv", ios::out | ios::app); //open file for write & seek end of the stream b4 each write
@@ -32,7 +37,7 @@ Book::Book(string tit, string number, int pag) {
     }
 }
 
-Book::Book(string Title) {
+Book::Book(string Title, string number) {
 
     fstream file;
     file.open("Books.csv", ios::in);
@@ -42,18 +47,18 @@ Book::Book(string Title) {
 
     while (getline(file, line)) {
         row.clear();
-        while (line.find(',') != -1) {
+        while (line.find(',') != string::npos) {
             row.push_back(line.substr(0, line.find(',')));
             line.erase(0, line.find(',') + 1);
         }
-        if (row[0] == Title) {
+        if ((row[0] == Title) | (row[1] == number)) {
             count = true;
             title = row[0];
             ISBN = row[1];
             pages = stoi(row[2]);
             availability = (row[3] == "1");
             reserved = (row[4] == "1");
-            //timeBorrowed = (row[5]);
+            timeBorrowed = (row[5]);
 
             break;
         }
@@ -115,10 +120,54 @@ void Book::setTime() {
         data =localtime (&current);
         strftime(value,80,"%d.%m.%Y",data);
         string temp(value);
-        timeBorrowed = temp;
+        timeBorrowed = temp + ".";
     }
 
 }
 
-string Book::getTimeBorrowed() {return std::string();}
+void Book::clearTime() {timeBorrowed = "0";}
+
+
+string Book::getTitle() {return title;}
+
+string Book::getTimeBorrowed() {return timeBorrowed;}
+
+int subDate(string date){
+
+    vector<int> borrowed;
+    while(date.find('.') != string::npos){
+        borrowed.push_back(stoi(date.substr(0,date.find('.'))));
+        date.erase(0, date.find('.') + 1);
+
+    }
+
+    time_t current;
+    struct tm * data;
+    char value[80];
+    time (&current);
+    data =localtime (&current);
+    strftime(value,80,"%d.%m.%Y",data);
+    string temp(value);
+    temp += ".";
+
+    cout << temp << endl;
+
+    vector<int> returned;
+    while(temp.find('.') != string::npos){
+        returned.push_back(stoi(temp.substr(0,temp.find('.'))));
+        temp.erase(0, temp.find('.')+1);
+    }
+
+
+    return days(returned[0], returned[1], returned[2]) -
+           days(borrowed[0], borrowed[1], borrowed[2]);
+
+}
+
+
+int days(int d, int m, int y) {
+    m = (m + 9) % 12;
+    y = y - m / 10;
+    return 365 * y + y / 4 - y / 100 + y / 400 + (m * 306 + 5) / 10 + (d - 1);
+}
 
