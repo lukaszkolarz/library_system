@@ -81,53 +81,71 @@ void Student::display(){
 }
 
 void Student::borrow() {
-    string title;
-    cout << "Please, insert title of the book you want to borrow:\n";
-    getline(cin, title);
-    cout << title;
-    Book borrowed(title, "0");
-    if (borrowed.isAvailable()) {
-        borrowed.setTime();
-        borrowed.setAvailable(false);
-        rentBookNumber = borrowed.getISBN();
-        borrowed.changesUpload();
-        schangesUpload();
+    if(stol(rentBookNumber) == 0) {
+        string title;
+        cout << "Please, insert title of the book you want to borrow:\n";
+        getline(cin, title);
+        Book borrowed(title, "0");
+        if (borrowed.isAvailable()) {
+            cout << "You are borrowing \""
+                 << title
+                 << "\"\n";
+            borrowed.setTime();
+            borrowed.setAvailable(false);
+            rentBookNumber = borrowed.getISBN();
+            borrowed.changesUpload();
+            schangesUpload();
+        } else { cout << "Not available at the moment!\n"; }
     }
-    else{cout << "Not available at the moment!\n";}
+    else{
+        cout << "Operation unavailable if you have borrowed something :/\n";
+    }
 }
 
 void Student::giveBack() {
-    //if(stol(rentBookNumber) != 0){
-        cout << rentBookNumber << endl;
+    if(stol(rentBookNumber) != 0){
         Book borrowed("0",rentBookNumber);
+        cout << "You are giving back \""
+             << borrowed.getTitle()
+             << "\""
+             << endl;
         rentBookNumber = "0";
         borrowed.setAvailable(true);
 
         if(subDate(borrowed.getTimeBorrowed()) > 15){
-            toPay += (static_cast<float>(subDate(borrowed.getTimeBorrowed()) * 0.2));
+            toPay += (static_cast<float>((subDate(borrowed.getTimeBorrowed()) -15) * 0.2));
             cout << "Your book is overdue. You have to pay "
-                 << (static_cast<float>(subDate(borrowed.getTimeBorrowed()) * 0.2))
-                 << "PLN\n";
+                 << (static_cast<float>((subDate(borrowed.getTimeBorrowed())-15) * 0.2))
+                 << " PLN\n";
         }
         cout << "Your balance is " << toPay << endl;
         if(toPay > 0) {
             int pay = 0;
-            while (pay != 1 && pay != 2) {
-            cout << "Do you want to pay?\n"
-                 << "[1] YES\n"
-                 << "[2] NO\n";
-            cin >> pay;
-        }
-           if (pay == 1){
-               payPLN();
-           }
+            while (pay != 1) {
+                cout << "Do you want to pay?\n"
+                     << "[1] YES\n"
+                     << "[2] NO\n";
+                cin >> pay;
+                if (pay == 1) {
+                    payPLN();
+                    cout << "Your balance is " << toPay << endl;
+                }
+                if (pay == 2) {
+                    break;
+                }
+
+            }
         }
 
         borrowed.clearTime();
         borrowed.changesUpload();
         schangesUpload();
 
-    //}
+    }
+    else{
+        cout << "You have nothing to return :D\n";
+        cout << "Your balance is " << toPay << endl;
+    }
 }
 
 void Student::payPLN() {

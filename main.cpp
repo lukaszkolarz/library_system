@@ -35,11 +35,11 @@ int main() {
     //Student pierwszy("2137");
     //pierwszy.display();
 
-   //cout << g(1,11,96) - g(28,10,96);
+
     Student osoba("234");
     //osoba.borrow();
     osoba.giveBack();
-    //cout <<  subDate("1.8.2019.");
+
 
 
     return 0;

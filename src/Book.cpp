@@ -149,9 +149,6 @@ int subDate(string date){
     strftime(value,80,"%d.%m.%Y",data);
     string temp(value);
     temp += ".";
-
-    cout << temp << endl;
-
     vector<int> returned;
     while(temp.find('.') != string::npos){
         returned.push_back(stoi(temp.substr(0,temp.find('.'))));
