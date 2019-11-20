@@ -1,6 +1,7 @@
 #include <iostream>
 #include "src/Student.h"
 #include "src/Book.h"
+#include "src/Root.h"
 #include <string>
 
 
@@ -71,6 +72,48 @@ int main() {
                         break;
                     default:
                         cout << "Wrong number\n";
+                }
+            }
+        }
+        if(index == "root") {
+            Root admin;
+            bool logout = true;
+            while (logout) {
+                int choice = 0;
+                while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6) {
+                    cout << "\nWhat do you want to do?\n\n"
+                         << "[1] New student\n"
+                         << "[2] New book\n"
+                         << "[3] Delete student\n"
+                         << "[4] Delete book\n"
+                         << "[5] Logout\n"
+                         << "[6] EXIT\n"
+                         << "\nEnter your choice:\n";
+                    cin >> choice;
+                    cin.ignore();
+                }
+                switch (choice) {
+                    case 1:
+                        admin.newStudent();
+                        break;
+                    case 2:
+                        admin.newBook();
+                        break;
+                    case 3:
+                        admin.deleteStudent();
+                        break;
+                    case 4:
+                        admin.deleteBook();
+                        break;
+                    case 5:
+                        logout = false;
+                        break;
+                    case 6:
+                        logout = false;
+                        exit = false;
+                        break;
+                    default:
+                        cout << "Wrong number!\n";
                 }
             }
         }

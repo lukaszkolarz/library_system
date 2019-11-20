@@ -29,7 +29,8 @@ Book::Book(string tit, string number, int pag) {
              << ISBN << ","
              << pages << ","
              << availability << ","
-             << reserved << ",\n";
+             << reserved << ","
+             << timeBorrowed << ",\n";
         file.close();
     }
     else{
