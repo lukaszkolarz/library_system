@@ -1,46 +1,79 @@
 #include <iostream>
 #include "src/Student.h"
 #include "src/Book.h"
-
-#include <ctime>
 #include <string>
 
 
-std::string sprawdz_godzine()
-{
-    time_t czas;
-    struct tm * data;
-    char godzina[80];
-    time (&czas);
-    data =localtime (&czas);
-    strftime (godzina,80,"%d.%m.%Y, %H:%M",data);
-    return godzina;
-}
-
-
-
+using namespace std;
 
 int main() {
-
-    //Book ksiazka("Pan Samochodzik i Templariusze", "200", 250);
-    //Book ksiega("Wladca Pierscieni");
-    //ksiega.setTime();
-   // ksiega.setAvailable(true);
-   // ksiega.setReservation(false);
-    //ksiega.changesUpload();
-
-
+    bool exit = true;
+    while(exit) {
+        cout << "Welcome in our LIBRARY SYSTEM\n"
+             << "Please LOG IN\n"
+             << "Your index:\n";
+        string index;
+        getline(cin, index);
 
 
-    //Student pierwszy("2137");
-    //pierwszy.display();
+        if (index != "root") {
+            Student user;
+            while (true) {
+                Student trial(index);
+                if (!trial.getIndex().empty()) {
+                    user = trial;
+                    break;
+                }
+                cout << "Your index:\n";
+                getline(cin, index);
+            }
+            bool logout = true;
+            while (logout) {
+                int choice = 0;
+                while (choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5 && choice != 6 &&
+                       choice != 7) {
+                    cout << "\nWhat do you want to do?\n\n"
+                         << "[1] Borrow a book\n"
+                         << "[2] Return a book\n"
+                         << "[3] Reserve a book\n"
+                         << "[4] Pay your balance\n"
+                         << "[5] Display user data\n"
+                         << "[6] Logout\n"
+                         << "[7] EXIT\n"
+                         << "\nEnter your choice:\n";
+                    cin >> choice;
+                    cin.ignore();
 
+                }
 
-    Student osoba("234");
-    //osoba.borrow();
-    osoba.giveBack();
-
-
-
+                switch (choice) {
+                    case 1:
+                        user.borrow();
+                        break;
+                    case 2:
+                        user.giveBack();
+                        break;
+                    case 3:
+                        user.reserve();
+                        break;
+                    case 4:
+                        user.payPLN();
+                        break;
+                    case 5:
+                        user.display();
+                        break;
+                    case 6:
+                        logout = false;
+                        break;
+                    case 7:
+                        logout = false;
+                        exit = false;
+                        break;
+                    default:
+                        cout << "Wrong number\n";
+                }
+            }
+        }
+    }
     return 0;
 }

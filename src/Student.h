@@ -14,7 +14,7 @@ using namespace std;
 class Student {
 private:
     string name , surname, index;
-    float toPay = 0;
+    float toPay;
     string rentBookNumber;
     string reservedBookNumber;
 
@@ -22,7 +22,8 @@ private:
 
 public:
     Student(string Name, string Surname, string Index);
-    Student(string Index);
+    explicit Student(const string& Index);                         //cannot be used for implicit conversions and copy
+    Student();
 
     void payPLN();
     void schangesUpload();
@@ -32,6 +33,7 @@ public:
     void giveBack();
 
     void display();
+    string getIndex();
 };
 
 

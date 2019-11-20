@@ -37,7 +37,7 @@ Book::Book(string tit, string number, int pag) {
     }
 }
 
-Book::Book(string Title, string number) {
+Book::Book(const string& Title, const string& number) {
 
     fstream file;
     file.open("Books.csv", ios::in);
@@ -88,12 +88,12 @@ void Book::changesUpload() {
             row[3] = to_string(availability);
             row[4] = to_string(reserved);
             row[5] = timeBorrowed;
-            line = row[0] + "," +        //title
-                      row[1] + "," +        //ISBN
-                      row[2] + "," +        //pages
-                      row[3] + "," +        //availability
-                      row[4] + "," +        //reserved
-                      row[5] + ",";       //time
+            line = row[0] + "," +       //title
+                    row[1] + "," +      //ISBN
+                    row[2] + "," +      //pages
+                    row[3] + "," +      //availability
+                    row[4] + "," +      //reserved
+                    row[5] + ",";       //time
         }
         temp << line << "\n";
 

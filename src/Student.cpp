@@ -15,6 +15,7 @@ Student::Student(string Name, string Surname, string Index) {
     index = move(Index);
     rentBookNumber = "0";
     reservedBookNumber = "0";
+    toPay = 0;
 
     fstream file;
     file.open("Students.csv", ios::out | ios::app); //open file for write & seek end of the stream b4 each write
@@ -26,6 +27,7 @@ Student::Student(string Name, string Surname, string Index) {
                  << toPay << ","
                  << reservedBookNumber << ",\n";
             file.close();
+            schangesUpload();
         }
         else{
             cout << "Can't add an user\n";
@@ -33,7 +35,7 @@ Student::Student(string Name, string Surname, string Index) {
 
 }
 
-Student::Student(string Index) {
+Student::Student(const string& Index) {
     fstream file;
     file.open("Students.csv", ios::in);
     vector<string> row;
@@ -59,40 +61,58 @@ Student::Student(string Index) {
     }
     file.close();
     if(count == 0){
-        cout << "Student not found!\nAdd new one\n\n";
-        string Name, Surname;
-        cout << "Insert your first name:\n";
-        cin >> Name;
-        cout << "Insert your surname:\n";
-        cin >> Surname;
-        Student(Name, Surname, Index);
+        cout << "Student not found!\nTry again\n\n";
     }
 }
 
 void Student::display(){
     if(!index.empty()) {
-        cout << index << "\n"
-             << surname << "\n"
-             << name << "\n"
-             << rentBookNumber << "\n"
-             << reservedBookNumber << "\n"
-             << toPay << "\n";
+        cout << "Your name: " << name << "\n"
+             << "Your surname: " << surname << "\n"
+             << "Your index " << index << "\n"
+             << "Your debit " << toPay << " PLN\n";
+        if(rentBookNumber != "0") {
+            Book rented("", rentBookNumber);
+            cout << "\nBook you rented: " << rented.getTitle() << "\n"
+                 << "ISBN: " << rentBookNumber << "\n"
+                 << "You rented it: " << rented.getTimeBorrowed().substr(0, (string::npos-1)) << "\n";
+
+        }
+        if(reservedBookNumber != "0") {
+            Book reserved("", reservedBookNumber);
+            cout << "\nBook you reserved: " << reserved.getTitle() << "\n"
+                 << "ISBN: " << reservedBookNumber << "\n";
+
+        }
     }
 }
 
 void Student::borrow() {
     if(stol(rentBookNumber) == 0) {
         string title;
-        cout << "Please, insert title of the book you want to borrow:\n";
+        cout << "Please, insert title of the book you want to BORROW:\n";
+        title = "\n";
         getline(cin, title);
-        Book borrowed(title, "0");
-        if (borrowed.isAvailable()) {
+        Book borrowed(title);
+        if (borrowed.isAvailable() && !borrowed.isReserved()) {
             cout << "You are borrowing \""
                  << title
                  << "\"\n";
             borrowed.setTime();
             borrowed.setAvailable(false);
             rentBookNumber = borrowed.getISBN();
+            borrowed.changesUpload();
+            schangesUpload();
+        } else if(borrowed.isAvailable() && borrowed.isReserved() && reservedBookNumber == borrowed.getISBN()){
+            cout << "You are borrowing book reserved earlier \""
+                 << title
+                 << "\"\n";
+            borrowed.setTime();
+            borrowed.setAvailable(false);
+            borrowed.setReservation(false);
+            rentBookNumber = borrowed.getISBN();
+            reservedBookNumber = "0";
+            borrowed.setReservation(false);
             borrowed.changesUpload();
             schangesUpload();
         } else { cout << "Not available at the moment!\n"; }
@@ -104,7 +124,7 @@ void Student::borrow() {
 
 void Student::giveBack() {
     if(stol(rentBookNumber) != 0){
-        Book borrowed("0",rentBookNumber);
+        Book borrowed("",rentBookNumber);
         cout << "You are giving back \""
              << borrowed.getTitle()
              << "\""
@@ -173,8 +193,8 @@ void Student::schangesUpload() {
             line = row[0] + "," +        //index
                    row[1] + "," +        //name
                    row[2] + "," +        //surname
-                   row[3] + "," +        //toPay
-                   row[4] + "," +        //rented
+                   row[3] + "," +        //rented
+                   row[4] + "," +        //toPay
                    row[5] + ",";         //reserved
         }
         temp << line << "\n";
@@ -185,3 +205,23 @@ void Student::schangesUpload() {
     remove("Students.csv");
     rename("Temp.csv", "Students.csv");
 }
+
+void Student::reserve() {
+    cout << "Please, insert title of the book you want to RESERVE:\n";
+    string title;
+    getline(cin, title);
+    Book reserved(title, "0");
+    if(reserved.isAvailable() && !reserved.isReserved()){
+        reservedBookNumber = reserved.getISBN();
+        reserved.setReservation(true);
+        cout << "RESERVATION CONFIRMED!\n";
+    }else{
+        cout << "Book is unavailable or reserved\n";
+    }
+    reserved.changesUpload();
+    schangesUpload();
+}
+
+string Student::getIndex() {return index;}
+
+Student::Student() {toPay = 0;}

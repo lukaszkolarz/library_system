@@ -20,8 +20,8 @@ private:
     string timeBorrowed;
 
 public:
-    Book(string title, string ISBN, int pages);                 //constructor to add new record (for root)
-    Book(string title, string number = "0");                    //constructor to find a record
+    Book(string title, string ISBN, int pages);                        //constructor to add new record (for root)
+    explicit Book(const string& title, const string& number = "0");    //constructor to find a record
 
     //set
     void setAvailable(bool available);
