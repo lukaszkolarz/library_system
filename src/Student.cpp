@@ -7,7 +7,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-
+#include "Date.h"
 
 Student::Student(string Name, string Surname, string Index) {
     name = move(Name);

@@ -9,9 +9,6 @@ using namespace std;
 #ifndef LIBRARY_SYSTEM_BOOK_H
 #define LIBRARY_SYSTEM_BOOK_H
 
-int days(int d, int m, int y);
-int subDate(string date);
-
 class Book {
 private:
     string title, ISBN;
