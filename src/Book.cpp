@@ -139,7 +139,6 @@ int subDate(string date){
     while(date.find('.') != string::npos){
         borrowed.push_back(stoi(date.substr(0,date.find('.'))));
         date.erase(0, date.find('.') + 1);
-
     }
 
     time_t current;
