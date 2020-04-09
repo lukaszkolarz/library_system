@@ -12,6 +12,7 @@
 using namespace std;
 
 void Root::newStudent() {
+    system("clear");
     string name, surname, index;
     cout << "Enter student parameters:\n\n";
     cout << "Name:\n";
@@ -22,10 +23,11 @@ void Root::newStudent() {
     getline(cin, index);
     Student fresh(name, surname, index);
     cout << "New record has been entered!\n";
-    fresh.display();
+    fresh.newDisplay();
 }
 
 void Root::newBook() {
+    system("clear");
     string title, ISBN, pages;
     cout << "Enter book parameters:\n\n";
     cout << "Title:\n";
@@ -39,6 +41,7 @@ void Root::newBook() {
 }
 
 void Root::deleteStudent() {
+    system("clear");
     string index;
     cout << "Enter student's index you want to delete\n";
     getline(cin, index);
@@ -66,6 +69,7 @@ void Root::deleteStudent() {
 }
 
 void Root::deleteBook() {
+    system("clear");
     string title;
     cout << "Enter book's title you want to delete\n";
     getline(cin, title);

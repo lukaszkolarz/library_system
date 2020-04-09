@@ -66,6 +66,7 @@ Student::Student(const string& Index) {
 }
 
 void Student::display(){
+    system("clear");
     if(!index.empty()) {
         cout << "Your name: " << name << "\n"
              << "Your surname: " << surname << "\n"
@@ -87,7 +88,21 @@ void Student::display(){
     }
 }
 
+void Student::newDisplay() {
+    system("clear");
+    if (!index.empty()) {
+        cout << "New student's name: " << name << "\n"
+             << "New student's surname: " << surname << "\n"
+             << "New student's index " << index << "\n"
+             << "New student's debit " << toPay << " PLN\n";
+    }
+    else{
+        cout<< "Adding student error :(\n" ;
+    }
+}
+
 void Student::borrow() {
+    system("clear");
     if(stol(rentBookNumber) == 0) {
         string title;
         cout << "Please, insert title of the book you want to BORROW:\n";
@@ -123,6 +138,7 @@ void Student::borrow() {
 }
 
 void Student::giveBack() {
+    system("clear");
     if(stol(rentBookNumber) != 0){
         Book borrowed("",rentBookNumber);
         cout << "You are giving back \""
@@ -138,7 +154,7 @@ void Student::giveBack() {
                  << (static_cast<float>((subDate(borrowed.getTimeBorrowed())-15) * 0.2))
                  << " PLN\n";
         }
-        cout << "Your balance is " << toPay << endl;
+        cout << "Your balance is " << toPay << " PLN" << endl;
         if(toPay > 0) {
             int pay = 0;
             while (pay != 1) {
@@ -169,7 +185,9 @@ void Student::giveBack() {
 }
 
 void Student::payPLN() {
+    system("clear");
     toPay = 0;
+    cout << "Debit paid succesfully!\n";
 }
 
 void Student::schangesUpload() {
@@ -207,6 +225,7 @@ void Student::schangesUpload() {
 }
 
 void Student::reserve() {
+    system("clear");
     cout << "Please, insert title of the book you want to RESERVE:\n";
     string title;
     getline(cin, title);

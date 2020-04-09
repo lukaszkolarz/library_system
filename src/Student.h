@@ -34,6 +34,7 @@ public:
 
     void display();
     string getIndex();
+    void newDisplay();
 };
 
 

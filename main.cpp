@@ -3,13 +3,14 @@
 #include "src/Book.h"
 #include "src/Root.h"
 #include <string>
-
+#include <cstdlib>
 
 using namespace std;
 
 int main() {
     bool exit = true;
     while(exit) {
+        system("clear");
         cout << "Welcome in our LIBRARY SYSTEM\n"
              << "Please LOG IN\n"
              << "Your index:\n";
@@ -45,34 +46,39 @@ int main() {
                     cin >> choice;
                     cin.ignore();
 
+                    switch (choice) {
+                        case 1:
+                            user.borrow();
+                            break;
+                        case 2:
+                            user.giveBack();
+                            break;
+                        case 3:
+                            user.reserve();
+                            break;
+                        case 4:
+                            user.payPLN();
+                            break;
+                        case 5:
+                            user.display();
+                            break;
+                        case 6:
+                            system("clear");
+                            logout = false;
+                            break;
+                        case 7:
+                            system("clear");
+                            logout = false;
+                            exit = false;
+                            break;
+                        default:
+                            system("clear");
+                            cout << "Wrong number\n\n";
+                    }
+
                 }
 
-                switch (choice) {
-                    case 1:
-                        user.borrow();
-                        break;
-                    case 2:
-                        user.giveBack();
-                        break;
-                    case 3:
-                        user.reserve();
-                        break;
-                    case 4:
-                        user.payPLN();
-                        break;
-                    case 5:
-                        user.display();
-                        break;
-                    case 6:
-                        logout = false;
-                        break;
-                    case 7:
-                        logout = false;
-                        exit = false;
-                        break;
-                    default:
-                        cout << "Wrong number\n";
-                }
+
             }
         }
         if(index == "root") {
@@ -91,29 +97,33 @@ int main() {
                          << "\nEnter your choice:\n";
                     cin >> choice;
                     cin.ignore();
-                }
-                switch (choice) {
-                    case 1:
-                        admin.newStudent();
-                        break;
-                    case 2:
-                        admin.newBook();
-                        break;
-                    case 3:
-                        admin.deleteStudent();
-                        break;
-                    case 4:
-                        admin.deleteBook();
-                        break;
-                    case 5:
-                        logout = false;
-                        break;
-                    case 6:
-                        logout = false;
-                        exit = false;
-                        break;
-                    default:
-                        cout << "Wrong number!\n";
+
+                    switch (choice) {
+                        case 1:
+                            admin.newStudent();
+                            break;
+                        case 2:
+                            admin.newBook();
+                            break;
+                        case 3:
+                            admin.deleteStudent();
+                            break;
+                        case 4:
+                            admin.deleteBook();
+                            break;
+                        case 5:
+                            system("clear");
+                            logout = false;
+                            break;
+                        case 6:
+                            system("clear");
+                            logout = false;
+                            exit = false;
+                            break;
+                        default:
+                            system("clear");
+                            cout << "Wrong number!\n\n";
+                    }
                 }
             }
         }

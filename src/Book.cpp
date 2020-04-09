@@ -23,7 +23,7 @@ Book::Book(string tit, string number, int pag) {
 
 
     fstream file;
-    file.open("Books.csv", ios::out | ios::app); //open file for write & seek end of the stream b4 each write
+    file.open("Books.csv", ios::in | ios::app); //open file for write & seek end of the stream b4 each write
     if (file.is_open()) {
         file << title << ","
              << ISBN << ","
@@ -127,7 +127,6 @@ void Book::setTime() {
 }
 
 void Book::clearTime() {timeBorrowed = "0";}
-
 
 string Book::getTitle() {return title;}
 
